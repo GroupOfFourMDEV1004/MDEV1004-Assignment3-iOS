@@ -15,5 +15,4 @@ struct Book: Codable
     let Rating: Float
     let Author: String
     let Genre: String
-    
 }

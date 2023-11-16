@@ -29,7 +29,7 @@ class AddEditBookViewController: UIViewController
             // Editing existing book
             bookNameTextField.text = book.BooksName
             ISBNTextField.text = book.ISBN
-            genresTextField.text = book.Genre.joined(separator: ", ")
+            genresTextField.text = book.Genre
             authorsTextField.text = book.Author
             ratingTextField.text = "\(book.Rating)"
             
@@ -86,9 +86,10 @@ class AddEditBookViewController: UIViewController
         let book = Book(
             _id: id,
             BooksName: name,
-            genres: [genres], // Wrap the value in an array
-            Author: authors
-            rating: rating
+            ISBN: isbn,
+            Rating: rating,
+            Author: authors,
+            Genre: genres // Wrap the value in an array
         )
         
         var request = URLRequest(url: url)
