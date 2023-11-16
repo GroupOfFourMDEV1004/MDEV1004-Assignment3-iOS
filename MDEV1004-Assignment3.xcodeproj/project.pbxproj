@@ -19,6 +19,7 @@
 		0310BBCB2A734F17002AEB62 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBC92A734F17002AEB62 /* Movie.swift */; };
 		0310BBCE2A734F54002AEB62 /* AddEditMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBCC2A734F54002AEB62 /* AddEditMovieViewController.swift */; };
 		0310BBCF2A734F54002AEB62 /* MovieCRUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBCD2A734F54002AEB62 /* MovieCRUDViewController.swift */; };
+		03A3D8582B05D5D5003F8AF1 /* Books.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3D8572B05D5D5003F8AF1 /* Books.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		0310BBC92A734F17002AEB62 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		0310BBCC2A734F54002AEB62 /* AddEditMovieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditMovieViewController.swift; sourceTree = "<group>"; };
 		0310BBCD2A734F54002AEB62 /* MovieCRUDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCRUDViewController.swift; sourceTree = "<group>"; };
+		03A3D8572B05D5D5003F8AF1 /* Books.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Books.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				0310BBB92A734C3C002AEB62 /* Assets.xcassets */,
 				0310BBBB2A734C3C002AEB62 /* LaunchScreen.storyboard */,
 				0310BBBE2A734C3C002AEB62 /* Info.plist */,
+				03A3D8572B05D5D5003F8AF1 /* Books.swift */,
 			);
 			path = "MDEV1004-Assignment3";
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 				0310BBC72A734EB4002AEB62 /* APIRegisterViewController.swift in Sources */,
 				0310BBCF2A734F54002AEB62 /* MovieCRUDViewController.swift in Sources */,
 				0310BBCE2A734F54002AEB62 /* AddEditMovieViewController.swift in Sources */,
+				03A3D8582B05D5D5003F8AF1 /* Books.swift in Sources */,
 				0310BBB52A734C3B002AEB62 /* ViewController.swift in Sources */,
 				0310BBCA2A734F17002AEB62 /* MovieTableViewCell.swift in Sources */,
 				0310BBC62A734EB4002AEB62 /* APILoginViewController.swift in Sources */,

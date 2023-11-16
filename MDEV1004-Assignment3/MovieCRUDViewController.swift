@@ -121,7 +121,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         // Configure the Request
-        guard let url = URL(string: "https://mdev1001-m2023-api.onrender.com/api/list") else
+        guard let url = URL(string: "http://192.168.2.82:3000/api/books") else
         {
             completion(nil, nil) // Handle URL error
             return
@@ -130,7 +130,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         // New for ICE 10
         var request = URLRequest(url: url)
             request.httpMethod = "GET"
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+//            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
 
         // Issue Request
         URLSession.shared.dataTask(with: request) { data, _, error in
@@ -149,6 +149,8 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
             // Response
             do {
                 print("Decoding JSON Data...")
+                let books = try JSONDecoder().decode([Books].self, from: data)
+                print(books.debugDescription, "Books")
                 let movies = try JSONDecoder().decode([Movie].self, from: data)
                 completion(movies, nil) // Success
             } catch {
