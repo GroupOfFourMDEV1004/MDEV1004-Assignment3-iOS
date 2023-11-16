@@ -90,7 +90,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
 //        }
 //
         // Configure the Request
-        guard let url = URL(string: "http://10.0.0.91:3000/api/books") else
+        guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books") else
         {
             completion(nil, nil) // Handle URL error
             return
@@ -117,7 +117,6 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
 
             // Response
             do {
-                print("Decoding JSON Data...")
                 let books = try JSONDecoder().decode([Book].self, from: data)
 //                print(books.debugDescription, "Books")
                 completion(books, nil) // Success
@@ -249,7 +248,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
             //            return
             //        }
             
-            guard let url = URL(string: "http://10.0.0.91:3000/api/books/delete/\(id)") else {
+            guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books/\(id)") else {
                 print("Invalid URL")
                 return
             }
@@ -257,7 +256,6 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
             // Configure Request
             var request = URLRequest(url: url)
             request.httpMethod = "DELETE"
-            // New for ICE10
             //        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
             
             // Issue Request
@@ -277,7 +275,6 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    // New for ICE 10
     @IBAction func logoutButtonPressed(_ sender: UIButton)
     {
         // Remove the token from UserDefaults or local storage to indicate logout

@@ -30,7 +30,7 @@ class APIRegisterViewController: UIViewController
                     return
         }
                 
-        let urlString = "http://10.0.0.91:3000/api/users/register"
+        let urlString = "https://assigment3-mdev1004-api.onrender.com/api/users/register"
         guard let url = URL(string: urlString) else
         {
             print("Invalid URL.")
