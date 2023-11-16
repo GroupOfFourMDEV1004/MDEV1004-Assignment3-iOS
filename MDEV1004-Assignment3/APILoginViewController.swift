@@ -42,7 +42,7 @@ class APILoginViewController: UIViewController
         }
         
         // Configure the Request
-        let parameters = ["emailAddress": username, "password": password]
+        let parameters = ["username": username, "password": password]
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -89,7 +89,7 @@ class APILoginViewController: UIViewController
                     //                        print("Token not found in the response.")
                     //                    }
                 } else {
-                    let errorMessage = json?["msg"] as? String ?? "Unknown error"
+                    let errorMessage = json?["message"] as? String ?? "Unknown error"
                     print("Login failed: \(errorMessage)")
                 }
             } catch {
