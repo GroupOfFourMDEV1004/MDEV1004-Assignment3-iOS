@@ -2,7 +2,7 @@
 
 import UIKit
 
-class MovieTableViewCell: UITableViewCell
+class BookTableViewCell: UITableViewCell
 {
     
     @IBOutlet weak var titleLabel: UITextField!

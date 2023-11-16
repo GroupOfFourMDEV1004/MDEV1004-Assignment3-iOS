@@ -7,11 +7,11 @@ struct UpdatedResponse: Codable
     let lastUpdated: Int
 }
 
-class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
+class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     @IBOutlet weak var tableView: UITableView!
         
-    var movies: [Books] = []
+    var books: [Book] = []
     var timer: Timer?
     var lastUpdated: Int = 0
     
@@ -21,7 +21,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.lastUpdated = Int(Date().timeIntervalSince1970 * 1000)
         
-        fetchMoviesAndUpdateUI()
+        fetchBooksAndUpdateUI()
         startPollingForUpdates()
     }
     
@@ -39,19 +39,19 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         timer = nil
     }
     
-    func fetchMoviesAndUpdateUI()
+    func fetchBooksAndUpdateUI()
     {
-        fetchMovies { [weak self] movies, error in
+        fetchBooks { [weak self] books, error in
             DispatchQueue.main.async
             {
-                if let movies = movies
+                if let books = books
                 {
-                    if movies.isEmpty
+                    if books.isEmpty
                     {
                         // Display a message for no data
-                        self?.displayErrorMessage("No movies available.")
+                        self?.displayErrorMessage("No books available.")
                     } else {
-                        self?.movies = movies
+                        self?.books = books
                         self?.tableView.reloadData()
                     }
                 } else if let error = error {
@@ -90,7 +90,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
                 print ("Last Updated Locally: \(self?.lastUpdated) Last Updated Remotely: \(response.lastUpdated)")
                 if self!.lastUpdated < response.lastUpdated {
                     self!.lastUpdated = response.lastUpdated
-                    self?.fetchMoviesAndUpdateUI()
+                    self?.fetchBooksAndUpdateUI()
                 }
             } catch {
                 print("Error decoding update response: \(error)")
@@ -105,7 +105,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         present(alertController, animated: true, completion: nil)
     }
     
-    func fetchMovies(completion: @escaping ([Books]?, Error?) -> Void)
+    func fetchBooks(completion: @escaping ([Book]?, Error?) -> Void)
     {
         // New for ICE10: Retrieve AuthToken from UserDefaults
 //        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
@@ -144,9 +144,8 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
             // Response
             do {
                 print("Decoding JSON Data...")
-                let books = try JSONDecoder().decode([Books].self, from: data)
+                let books = try JSONDecoder().decode([Book].self, from: data)
                 print(books.debugDescription, "Books")
-//                let movies = try JSONDecoder().decode([Movie].self, from: data)
                 completion(books, nil) // Success
             } catch {
                 completion(nil, error) // Handle JSON decoding error
@@ -157,22 +156,22 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return movies.count
+        return books.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! BookTableViewCell
                         
                 
-        let movie = movies[indexPath.row]
+        let book = books[indexPath.row]
                         
-        cell.titleLabel?.text = movie.BooksName
-        cell.studioLabel?.text = movie.Genre
-        cell.ratingLabel?.text = "\(movie.Rating)"
+        cell.titleLabel?.text = book.BooksName
+        cell.studioLabel?.text = book.Genre
+        cell.ratingLabel?.text = "\(book.Rating)"
                 
         // Set the background color of criticsRatingLabel based on the rating
-        let rating = movie.Rating
+        let rating = book.Rating
                            
         if rating > 7
         {
@@ -188,7 +187,6 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
-    // New for ICE8
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         performSegue(withIdentifier: "AddEditSegue", sender: indexPath)
@@ -199,8 +197,8 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         {
             if editingStyle == .delete
                 {
-                    let movie = movies[indexPath.row]
-                    ShowDeleteConfirmationAlert(for: movie) { confirmed in
+                    let book = books[indexPath.row]
+                    ShowDeleteConfirmationAlert(for: book) { confirmed in
                         if confirmed
                         {
                             self.deleteMovie(at: indexPath)
@@ -218,32 +216,32 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         if segue.identifier == "AddEditSegue"
         {
-            if let addEditVC = segue.destination as? AddEditMovieViewController
+            if let addEditVC = segue.destination as? AddEditBookViewController
             {
-                addEditVC.movieViewController = self
+                addEditVC.bookViewController = self
                 if let indexPath = sender as? IndexPath
                 {
-                   // Editing existing movie
-                   let movie = movies[indexPath.row]
-//                   addEditVC.movie = movie// To be changed
+                   // Editing existing book
+                   let book = books[indexPath.row]
+                   addEditVC.book = book
                 } else {
-                    // Adding new movie
-                    addEditVC.movie = nil
+                    // Adding new book
+                    addEditVC.book = nil
                 }
                 
-                // Set the callback closure to reload movies
-                addEditVC.movieUpdateCallback = { [weak self] in
-                    self?.fetchMovies { movies, error in
-                        if let movies = movies
+                // Set the callback closure to reload books
+                addEditVC.bookUpdateCallback = { [weak self] in
+                    self?.fetchBooks { books, error in
+                        if let books = books
                         {
-                            self?.movies = movies
+                            self?.books = books
                             DispatchQueue.main.async {
                                 self?.tableView.reloadData()
                             }
                         }
                         else if let error = error
                         {
-                            print("Failed to fetch movies: \(error)")
+                            print("Failed to fetch books: \(error)")
                         }
                     }
                 }
@@ -251,9 +249,9 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func ShowDeleteConfirmationAlert(for movie: Books, completion: @escaping (Bool) -> Void)
+    func ShowDeleteConfirmationAlert(for book: Book, completion: @escaping (Bool) -> Void)
     {
-        let alert = UIAlertController(title: "Delete Movie", message: "Are you sure you want to delete this movie?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete Book", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
             completion(false)
@@ -268,7 +266,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func deleteMovie(at indexPath: IndexPath)
     {
-        let movie = movies[indexPath.row]
+        let book = books[indexPath.row]
         
         // New for ICE10
         guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
@@ -277,7 +275,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
             return
         }
 
-        guard let url = URL(string: "https://mdev1001-m2023-api.onrender.com/api/delete/\(movie._id)") else {
+        guard let url = URL(string: "https://mdev1001-m2023-api.onrender.com/api/delete/\(book._id)") else {
             print("Invalid URL")
             return
         }
@@ -291,12 +289,12 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         // Issue Request
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             if let error = error {
-                print("Failed to delete movie: \(error)")
+                print("Failed to delete book: \(error)")
                 return
             }
 
             DispatchQueue.main.async {
-                self?.movies.remove(at: indexPath.row)
+                self?.books.remove(at: indexPath.row)
                 self?.tableView.deleteRows(at: [indexPath], with: .fade)
             }
         }

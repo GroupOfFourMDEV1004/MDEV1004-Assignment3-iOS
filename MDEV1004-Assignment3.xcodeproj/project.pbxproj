@@ -9,35 +9,31 @@
 /* Begin PBXBuildFile section */
 		0310BBB12A734C3B002AEB62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBB02A734C3B002AEB62 /* AppDelegate.swift */; };
 		0310BBB32A734C3B002AEB62 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBB22A734C3B002AEB62 /* SceneDelegate.swift */; };
-		0310BBB52A734C3B002AEB62 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBB42A734C3B002AEB62 /* ViewController.swift */; };
 		0310BBB82A734C3B002AEB62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0310BBB62A734C3B002AEB62 /* Main.storyboard */; };
 		0310BBBA2A734C3C002AEB62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0310BBB92A734C3C002AEB62 /* Assets.xcassets */; };
 		0310BBBD2A734C3C002AEB62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0310BBBB2A734C3C002AEB62 /* LaunchScreen.storyboard */; };
 		0310BBC62A734EB4002AEB62 /* APILoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBC42A734EB3002AEB62 /* APILoginViewController.swift */; };
 		0310BBC72A734EB4002AEB62 /* APIRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBC52A734EB3002AEB62 /* APIRegisterViewController.swift */; };
-		0310BBCA2A734F17002AEB62 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBC82A734F17002AEB62 /* MovieTableViewCell.swift */; };
-		0310BBCB2A734F17002AEB62 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBC92A734F17002AEB62 /* Movie.swift */; };
-		0310BBCE2A734F54002AEB62 /* AddEditMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBCC2A734F54002AEB62 /* AddEditMovieViewController.swift */; };
-		0310BBCF2A734F54002AEB62 /* MovieCRUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBCD2A734F54002AEB62 /* MovieCRUDViewController.swift */; };
-		03A3D8582B05D5D5003F8AF1 /* Books.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3D8572B05D5D5003F8AF1 /* Books.swift */; };
+		0310BBCA2A734F17002AEB62 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBC82A734F17002AEB62 /* BookTableViewCell.swift */; };
+		0310BBCE2A734F54002AEB62 /* AddEditBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBCC2A734F54002AEB62 /* AddEditBookViewController.swift */; };
+		0310BBCF2A734F54002AEB62 /* BookCRUDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0310BBCD2A734F54002AEB62 /* BookCRUDViewController.swift */; };
+		03A3D8582B05D5D5003F8AF1 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3D8572B05D5D5003F8AF1 /* Book.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0310BBAD2A734C3B002AEB62 /* MDEV1004-Assignment3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MDEV1004-Assignment3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0310BBB02A734C3B002AEB62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0310BBB22A734C3B002AEB62 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0310BBB42A734C3B002AEB62 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0310BBB72A734C3B002AEB62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0310BBB92A734C3C002AEB62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0310BBBC2A734C3C002AEB62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0310BBBE2A734C3C002AEB62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0310BBC42A734EB3002AEB62 /* APILoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APILoginViewController.swift; sourceTree = "<group>"; };
 		0310BBC52A734EB3002AEB62 /* APIRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRegisterViewController.swift; sourceTree = "<group>"; };
-		0310BBC82A734F17002AEB62 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
-		0310BBC92A734F17002AEB62 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
-		0310BBCC2A734F54002AEB62 /* AddEditMovieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditMovieViewController.swift; sourceTree = "<group>"; };
-		0310BBCD2A734F54002AEB62 /* MovieCRUDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCRUDViewController.swift; sourceTree = "<group>"; };
-		03A3D8572B05D5D5003F8AF1 /* Books.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Books.swift; sourceTree = "<group>"; };
+		0310BBC82A734F17002AEB62 /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
+		0310BBCC2A734F54002AEB62 /* AddEditBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditBookViewController.swift; sourceTree = "<group>"; };
+		0310BBCD2A734F54002AEB62 /* BookCRUDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCRUDViewController.swift; sourceTree = "<group>"; };
+		03A3D8572B05D5D5003F8AF1 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,20 +66,18 @@
 		0310BBAF2A734C3B002AEB62 /* MDEV1004-Assignment3 */ = {
 			isa = PBXGroup;
 			children = (
-				0310BBCC2A734F54002AEB62 /* AddEditMovieViewController.swift */,
-				0310BBCD2A734F54002AEB62 /* MovieCRUDViewController.swift */,
-				0310BBC92A734F17002AEB62 /* Movie.swift */,
-				0310BBC82A734F17002AEB62 /* MovieTableViewCell.swift */,
+				0310BBCC2A734F54002AEB62 /* AddEditBookViewController.swift */,
+				0310BBCD2A734F54002AEB62 /* BookCRUDViewController.swift */,
+				0310BBC82A734F17002AEB62 /* BookTableViewCell.swift */,
 				0310BBC42A734EB3002AEB62 /* APILoginViewController.swift */,
 				0310BBC52A734EB3002AEB62 /* APIRegisterViewController.swift */,
 				0310BBB02A734C3B002AEB62 /* AppDelegate.swift */,
 				0310BBB22A734C3B002AEB62 /* SceneDelegate.swift */,
-				0310BBB42A734C3B002AEB62 /* ViewController.swift */,
 				0310BBB62A734C3B002AEB62 /* Main.storyboard */,
 				0310BBB92A734C3C002AEB62 /* Assets.xcassets */,
 				0310BBBB2A734C3C002AEB62 /* LaunchScreen.storyboard */,
 				0310BBBE2A734C3C002AEB62 /* Info.plist */,
-				03A3D8572B05D5D5003F8AF1 /* Books.swift */,
+				03A3D8572B05D5D5003F8AF1 /* Book.swift */,
 			);
 			path = "MDEV1004-Assignment3";
 			sourceTree = "<group>";
@@ -159,13 +153,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0310BBCB2A734F17002AEB62 /* Movie.swift in Sources */,
 				0310BBC72A734EB4002AEB62 /* APIRegisterViewController.swift in Sources */,
-				0310BBCF2A734F54002AEB62 /* MovieCRUDViewController.swift in Sources */,
-				0310BBCE2A734F54002AEB62 /* AddEditMovieViewController.swift in Sources */,
-				03A3D8582B05D5D5003F8AF1 /* Books.swift in Sources */,
-				0310BBB52A734C3B002AEB62 /* ViewController.swift in Sources */,
-				0310BBCA2A734F17002AEB62 /* MovieTableViewCell.swift in Sources */,
+				0310BBCF2A734F54002AEB62 /* BookCRUDViewController.swift in Sources */,
+				0310BBCE2A734F54002AEB62 /* AddEditBookViewController.swift in Sources */,
+				03A3D8582B05D5D5003F8AF1 /* Book.swift in Sources */,
+				0310BBCA2A734F17002AEB62 /* BookTableViewCell.swift in Sources */,
 				0310BBC62A734EB4002AEB62 /* APILoginViewController.swift in Sources */,
 				0310BBB12A734C3B002AEB62 /* AppDelegate.swift in Sources */,
 				0310BBB32A734C3B002AEB62 /* SceneDelegate.swift in Sources */,
