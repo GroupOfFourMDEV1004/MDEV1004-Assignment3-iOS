@@ -19,6 +19,7 @@ class AddEditBookViewController: UIViewController
     var book: Book?
     var bookViewController: BookCRUDViewController? // Updated from BookViewController
     var bookUpdateCallback: (() -> Void)? // Updated from BookViewController
+    var isEdit = false
     
     override func viewDidLoad()
     {
@@ -50,23 +51,26 @@ class AddEditBookViewController: UIViewController
     
     @IBAction func UpdateButton_Pressed(_ sender: UIButton)
     {
+        
         // Retrieve AuthToken
-        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
-        {
-            print("AuthToken not available.")
-            return
-        }
+//        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
+//        {
+//            print("AuthToken not available.")
+//            return
+//        }
         
         // Configure Request
         let urlString: String
         let requestType: String
         
-        if let book = book {
+        if let book = book, let id = book._id {
             requestType = "PUT"
-            urlString = "https://mdev1001-m2023-api.onrender.com/api/update/\(book._id)"
+            urlString = "http://10.0.0.91:3000/api/books/\(id)"
+            isEdit = true
         } else {
             requestType = "POST"
-            urlString = "https://mdev1001-m2023-api.onrender.com/api/add"
+            urlString = "http://10.0.0.91:3000/api/books"
+            var isEdit = false
         }
         
         guard let url = URL(string: urlString) else {
@@ -81,26 +85,37 @@ class AddEditBookViewController: UIViewController
         let authors: String = authorsTextField.text ?? ""
         let genres: String = genresTextField.text ?? ""
         let rating: Float = Float(ratingTextField.text ?? "") ?? 0
-
+        var parameter : [String : Any]
         // Create the book with the parsed data
-        let book = Book(
-            _id: id,
-            BooksName: name,
-            ISBN: isbn,
-            Rating: rating,
-            Author: authors,
-            Genre: genres // Wrap the value in an array
-        )
+        
+        if isEdit == true {
+             parameter = [
+                "_id": id,
+                "BooksName": name,
+                "ISBN": isbn,
+                "Rating": rating,
+                "Author": authors,
+                "Genre": genres // Wrap the value in an array
+            ]
+        } else {
+            parameter = [
+                "BooksName": name,
+                "ISBN": isbn,
+                "Rating": rating,
+                "Author": authors,
+                "Genre": genres // Wrap the value in an array
+            ]
+        }
         
         var request = URLRequest(url: url)
         request.httpMethod = requestType
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         // New for ICE 10: Add the AuthToken to the request headers
-        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+//        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         
         // Request
         do {
-            request.httpBody = try JSONEncoder().encode(book)
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameter, options: [])
         } catch {
             print("Failed to encode book: \(error)")
             return

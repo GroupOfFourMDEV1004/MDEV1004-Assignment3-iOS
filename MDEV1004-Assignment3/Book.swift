@@ -9,7 +9,7 @@ import Foundation
 
 struct Book: Codable
 {
-    let _id: String
+    let _id: String?
     let BooksName: String
     let ISBN: String
     let Rating: Float

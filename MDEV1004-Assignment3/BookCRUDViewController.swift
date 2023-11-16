@@ -15,6 +15,9 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     var timer: Timer?
     var lastUpdated: Int = 0
     
+    
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -27,13 +30,13 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     
     func startPollingForUpdates() {
             stopPollingForUpdates() // Stop any existing timers
-            
+
             // Schedule a timer to check for updates every 5 seconds
             timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-                self?.checkForUpdates()
+                self?.fetchBooksAndUpdateUI()
             }
         }
-        
+
     func stopPollingForUpdates() {
         timer?.invalidate()
         timer = nil
@@ -68,35 +71,6 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func checkForUpdates()
-    {
-        guard let url = URL(string: "https://mdev1001-m2023-api.onrender.com/api/has-updates") else {
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            if let error = error {
-                print("Error checking for updates: \(error)")
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                
-                let response = try JSONDecoder().decode(UpdatedResponse.self, from: data)
-                print ("Last Updated Locally: \(self?.lastUpdated) Last Updated Remotely: \(response.lastUpdated)")
-                if self!.lastUpdated < response.lastUpdated {
-                    self!.lastUpdated = response.lastUpdated
-                    self?.fetchBooksAndUpdateUI()
-                }
-            } catch {
-                print("Error decoding update response: \(error)")
-            }
-        }.resume()
-    }
     
     func displayErrorMessage(_ message: String)
     {
@@ -145,7 +119,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
             do {
                 print("Decoding JSON Data...")
                 let books = try JSONDecoder().decode([Book].self, from: data)
-                print(books.debugDescription, "Books")
+//                print(books.debugDescription, "Books")
                 completion(books, nil) // Success
             } catch {
                 completion(nil, error) // Handle JSON decoding error
@@ -173,11 +147,11 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         // Set the background color of criticsRatingLabel based on the rating
         let rating = book.Rating
                            
-        if rating > 7
+        if rating > 4
         {
             cell.ratingLabel.backgroundColor = UIColor.green
             cell.ratingLabel.textColor = UIColor.black
-        } else if rating > 5 {
+        } else if rating > 3 {
             cell.ratingLabel.backgroundColor = UIColor.yellow
             cell.ratingLabel.textColor = UIColor.black
         } else {
@@ -267,39 +241,40 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     func deleteMovie(at indexPath: IndexPath)
     {
         let book = books[indexPath.row]
-        
-        // New for ICE10
-        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
-        {
-            print("AuthToken not available.")
-            return
-        }
-
-        guard let url = URL(string: "https://mdev1001-m2023-api.onrender.com/api/delete/\(book._id)") else {
-            print("Invalid URL")
-            return
-        }
-
-        // Configure Request
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        // New for ICE10
-        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-
-        // Issue Request
-        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            if let error = error {
-                print("Failed to delete book: \(error)")
+        if let id = book._id {
+            // New for ICE10
+            //        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
+            //        {
+            //            print("AuthToken not available.")
+            //            return
+            //        }
+            
+            guard let url = URL(string: "http://10.0.0.91:3000/api/books/delete/\(id)") else {
+                print("Invalid URL")
                 return
             }
-
-            DispatchQueue.main.async {
-                self?.books.remove(at: indexPath.row)
-                self?.tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-        }
             
-        task.resume()
+            // Configure Request
+            var request = URLRequest(url: url)
+            request.httpMethod = "DELETE"
+            // New for ICE10
+            //        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+            
+            // Issue Request
+            let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+                if let error = error {
+                    print("Failed to delete book: \(error)")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self?.books.remove(at: indexPath.row)
+                    self?.tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+            }
+            
+            task.resume()
+        }
     }
     
     // New for ICE 10
