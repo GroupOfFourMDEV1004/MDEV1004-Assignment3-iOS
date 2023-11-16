@@ -30,7 +30,7 @@ class APIRegisterViewController: UIViewController
                     return
         }
                 
-        let urlString = "https://mdev1001-m2023-api.onrender.com/api/register"
+        let urlString = "http://10.0.0.91:3000/api/users/register"
         guard let url = URL(string: urlString) else
         {
             print("Invalid URL.")
@@ -41,9 +41,9 @@ class APIRegisterViewController: UIViewController
                 
         let parameters = [
             "username": username,
-            "EmailAddress": emailAddress,
-            "FirstName": firstName,
-            "LastName": lastName,
+            "emailAddress": emailAddress,
+            "firstName": firstName,
+            "lastName": lastName,
             "password": password
         ]
                 
@@ -77,7 +77,7 @@ class APIRegisterViewController: UIViewController
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                 
-                if let success = json?["success"] as? Bool, success == true
+                if let username = json?["username"] as? String
                 {
                     print("User registered successfully.")
                     

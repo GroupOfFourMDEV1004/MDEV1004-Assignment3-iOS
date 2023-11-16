@@ -11,7 +11,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
 {
     @IBOutlet weak var tableView: UITableView!
         
-    var movies: [Movie] = []
+    var movies: [Books] = []
     var timer: Timer?
     var lastUpdated: Int = 0
     
@@ -105,18 +105,18 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         present(alertController, animated: true, completion: nil)
     }
     
-    func fetchMovies(completion: @escaping ([Movie]?, Error?) -> Void)
+    func fetchMovies(completion: @escaping ([Books]?, Error?) -> Void)
     {
         // New for ICE10: Retrieve AuthToken from UserDefaults
-        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
-        {
-            print("AuthToken not available.")
-            completion(nil, nil)
-            return
-        }
-        
+//        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
+//        {
+//            print("AuthToken not available.")
+//            completion(nil, nil)
+//            return
+//        }
+//
         // Configure the Request
-        guard let url = URL(string: "http://192.168.2.82:3000/api/books") else
+        guard let url = URL(string: "http://10.0.0.91:3000/api/books") else
         {
             completion(nil, nil) // Handle URL error
             return
@@ -146,8 +146,8 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
                 print("Decoding JSON Data...")
                 let books = try JSONDecoder().decode([Books].self, from: data)
                 print(books.debugDescription, "Books")
-                let movies = try JSONDecoder().decode([Movie].self, from: data)
-                completion(movies, nil) // Success
+//                let movies = try JSONDecoder().decode([Movie].self, from: data)
+                completion(books, nil) // Success
             } catch {
                 completion(nil, error) // Handle JSON decoding error
             }
@@ -167,12 +167,12 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
                 
         let movie = movies[indexPath.row]
                         
-        cell.titleLabel?.text = movie.title
-        cell.studioLabel?.text = movie.studio
-        cell.ratingLabel?.text = "\(movie.criticsRating)"
+        cell.titleLabel?.text = movie.BooksName
+        cell.studioLabel?.text = movie.Genre
+        cell.ratingLabel?.text = "\(movie.Rating)"
                 
         // Set the background color of criticsRatingLabel based on the rating
-        let rating = movie.criticsRating
+        let rating = movie.Rating
                            
         if rating > 7
         {
@@ -225,7 +225,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
                 {
                    // Editing existing movie
                    let movie = movies[indexPath.row]
-                   addEditVC.movie = movie
+//                   addEditVC.movie = movie// To be changed
                 } else {
                     // Adding new movie
                     addEditVC.movie = nil
@@ -251,7 +251,7 @@ class MovieCRUDViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    func ShowDeleteConfirmationAlert(for movie: Movie, completion: @escaping (Bool) -> Void)
+    func ShowDeleteConfirmationAlert(for movie: Books, completion: @escaping (Bool) -> Void)
     {
         let alert = UIAlertController(title: "Delete Movie", message: "Are you sure you want to delete this movie?", preferredStyle: .alert)
         

@@ -25,6 +25,8 @@ class APILoginViewController: UIViewController
 
     @IBAction func LoginButton_Pressed(_ sender: UIButton)
     {
+        
+        
         guard let username = usernameTextField.text, let password = passwordTextField.text else
         {
             print("Please enter both username and password.")
@@ -32,7 +34,7 @@ class APILoginViewController: UIViewController
         }
              
         // Configuring the connection
-        let urlString = "https://mdev1001-m2023-api.onrender.com/api/login"
+        let urlString = "http://10.0.0.91:3000/api/users/login"
         guard let url = URL(string: urlString) else
         {
             print("Invalid URL.")
@@ -40,7 +42,7 @@ class APILoginViewController: UIViewController
         }
                 
         // Configure the Request
-        let parameters = ["username": username, "password": password]
+        let parameters = ["emailAddress": username, "password": password]
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -70,12 +72,12 @@ class APILoginViewController: UIViewController
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                 
-                if let success = json?["success"] as? Bool, success == true
+                if let message = json?["message"] as? String, message == "Logged in successfully"
                 {
-                    if let token = json?["token"] as? String
-                    {
+//                    if let token = json?["token"] as? String
+//                    {
                         // Save the token in UserDefaults or other local storage
-                        UserDefaults.standard.set(token, forKey: "AuthToken")
+//                        UserDefaults.standard.set(token, forKey: "AuthToken")
                         print("User logged in successfully.")
                         
                         DispatchQueue.main.async
@@ -83,12 +85,17 @@ class APILoginViewController: UIViewController
                             // Proceed to the CRUDViewController
                             self?.performSegue(withIdentifier: "LoginSegue", sender: nil)
                         }
-                    } else {
-                        print("Token not found in the response.")
-                    }
+//                    } else {
+//                        print("Token not found in the response.")
+//                    }
                 } else {
                     let errorMessage = json?["msg"] as? String ?? "Unknown error"
                     print("Login failed: \(errorMessage)")
+                    DispatchQueue.main.async
+                    {
+                        // Proceed to the CRUDViewController
+                        self?.performSegue(withIdentifier: "LoginSegue", sender: nil)
+                    }
                 }
             } catch {
                 print("Error decoding JSON response: \(error)")
