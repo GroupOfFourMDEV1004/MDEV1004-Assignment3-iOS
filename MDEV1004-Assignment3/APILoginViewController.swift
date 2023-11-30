@@ -74,20 +74,20 @@ class APILoginViewController: UIViewController
                 
                 if let message = json?["message"] as? String, message == "Logged in successfully"
                 {
-                    //                    if let token = json?["token"] as? String
-                    //                    {
-                    // Save the token in UserDefaults or other local storage
-                    //                        UserDefaults.standard.set(token, forKey: "AuthToken")
-                    print("User logged in successfully.")
-                    
-                    DispatchQueue.main.async
+                    if let token = json?["token"] as? String
                     {
-                        // Proceed to the CRUDViewController
-                        self?.performSegue(withIdentifier: "LoginSegue", sender: nil)
+                        // Save the token in UserDefaults or other local storage
+                        UserDefaults.standard.set(token, forKey: "AuthToken")
+                        print("User logged in successfully.")
+                        
+                        DispatchQueue.main.async
+                        {
+                            // Proceed to the CRUDViewController
+                            self?.performSegue(withIdentifier: "LoginSegue", sender: nil)
+                        }
+                    } else {
+                        print("Token not found in the response.")
                     }
-                    //                    } else {
-                    //                        print("Token not found in the response.")
-                    //                    }
                 } else {
                     let errorMessage = json?["message"] as? String ?? "Unknown error"
                     print("Login failed: \(errorMessage)")

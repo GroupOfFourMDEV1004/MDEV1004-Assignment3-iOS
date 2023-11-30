@@ -26,10 +26,10 @@ class APIRegisterViewController: UIViewController
               let lastName = lastNameTextField.text,
               let password = passwordTextField.text else
         {
-                    print("Please enter all the required fields.")
-                    return
+            print("Please enter all the required fields.")
+            return
         }
-                
+        
         let urlString = "https://assigment3-mdev1004-api.onrender.com/api/users/register"
         guard let url = URL(string: urlString) else
         {
@@ -38,7 +38,7 @@ class APIRegisterViewController: UIViewController
         }
         
         // Configure Request
-                
+        
         let parameters = [
             "username": username,
             "emailAddress": emailAddress,
@@ -46,7 +46,7 @@ class APIRegisterViewController: UIViewController
             "lastName": lastName,
             "password": password
         ]
-                
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

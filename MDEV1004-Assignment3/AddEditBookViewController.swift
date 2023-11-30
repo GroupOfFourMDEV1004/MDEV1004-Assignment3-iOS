@@ -52,12 +52,12 @@ class AddEditBookViewController: UIViewController
     @IBAction func UpdateButton_Pressed(_ sender: UIButton)
     {
         
-        // Retrieve AuthToken
-//        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
-//        {
-//            print("AuthToken not available.")
-//            return
-//        }
+        //         Retrieve AuthToken
+        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
+        {
+            print("AuthToken not available.")
+            return
+        }
         
         // Configure Request
         let urlString: String
@@ -89,7 +89,7 @@ class AddEditBookViewController: UIViewController
         // Create the book with the parsed data
         
         if isEdit == true {
-             parameter = [
+            parameter = [
                 "_id": id,
                 "BooksName": name,
                 "ISBN": isbn,
@@ -111,7 +111,7 @@ class AddEditBookViewController: UIViewController
         request.httpMethod = requestType
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         // New for ICE 10: Add the AuthToken to the request headers
-//        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         
         // Request
         do {

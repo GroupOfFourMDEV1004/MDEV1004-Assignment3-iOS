@@ -10,7 +10,7 @@ struct UpdatedResponse: Codable
 class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     @IBOutlet weak var tableView: UITableView!
-        
+    
     var books: [Book] = []
     var timer: Timer?
     var lastUpdated: Int = 0
@@ -29,14 +29,14 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func startPollingForUpdates() {
-            stopPollingForUpdates() // Stop any existing timers
-
-            // Schedule a timer to check for updates every 5 seconds
-            timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-                self?.fetchBooksAndUpdateUI()
-            }
+        stopPollingForUpdates() // Stop any existing timers
+        
+        // Schedule a timer to check for updates every 5 seconds
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+            self?.fetchBooksAndUpdateUI()
         }
-
+    }
+    
     func stopPollingForUpdates() {
         timer?.invalidate()
         timer = nil
@@ -82,13 +82,13 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     func fetchBooks(completion: @escaping ([Book]?, Error?) -> Void)
     {
         // New for ICE10: Retrieve AuthToken from UserDefaults
-//        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
-//        {
-//            print("AuthToken not available.")
-//            completion(nil, nil)
-//            return
-//        }
-//
+        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
+        {
+            print("AuthToken not available.")
+            completion(nil, nil)
+            return
+        }
+        //
         // Configure the Request
         guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books") else
         {
@@ -98,9 +98,9 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         
         // New for ICE 10
         var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-//            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+        
         // Issue Request
         URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
@@ -108,25 +108,25 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
                 completion(nil, error) // Handle network error
                 return
             }
-
+            
             guard let data = data else {
                 print("Empty Response")
                 completion(nil, nil) // Handle empty response
                 return
             }
-
+            
             // Response
             do {
                 let books = try JSONDecoder().decode([Book].self, from: data)
-//                print(books.debugDescription, "Books")
+                //                print(books.debugDescription, "Books")
                 completion(books, nil) // Success
             } catch {
                 completion(nil, error) // Handle JSON decoding error
             }
         }.resume()
     }
-
-
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return books.count
@@ -135,17 +135,17 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! BookTableViewCell
-                        
-                
+        
+        
         let book = books[indexPath.row]
-                        
+        
         cell.titleLabel?.text = book.BooksName
         cell.studioLabel?.text = book.Genre
         cell.ratingLabel?.text = "\(book.Rating)"
-                
+        
         // Set the background color of criticsRatingLabel based on the rating
         let rating = book.Rating
-                           
+        
         if rating > 4
         {
             cell.ratingLabel.backgroundColor = UIColor.green
@@ -164,21 +164,21 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     {
         performSegue(withIdentifier: "AddEditSegue", sender: indexPath)
     }
-        
+    
     // Swipe Left Gesture
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath)
+    {
+        if editingStyle == .delete
         {
-            if editingStyle == .delete
+            let book = books[indexPath.row]
+            ShowDeleteConfirmationAlert(for: book) { confirmed in
+                if confirmed
                 {
-                    let book = books[indexPath.row]
-                    ShowDeleteConfirmationAlert(for: book) { confirmed in
-                        if confirmed
-                        {
-                            self.deleteMovie(at: indexPath)
-                        }
-                    }
+                    self.deleteMovie(at: indexPath)
                 }
+            }
         }
+    }
     
     @IBAction func AddButton_Pressed(_ sender: UIButton)
     {
@@ -194,9 +194,9 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
                 addEditVC.bookViewController = self
                 if let indexPath = sender as? IndexPath
                 {
-                   // Editing existing book
-                   let book = books[indexPath.row]
-                   addEditVC.book = book
+                    // Editing existing book
+                    let book = books[indexPath.row]
+                    addEditVC.book = book
                 } else {
                     // Adding new book
                     addEditVC.book = nil
@@ -241,12 +241,12 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
     {
         let book = books[indexPath.row]
         if let id = book._id {
-            // New for ICE10
-            //        guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
-            //        {
-            //            print("AuthToken not available.")
-            //            return
-            //        }
+            
+            guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
+            {
+                print("AuthToken not available.")
+                return
+            }
             
             guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books/\(id)") else {
                 print("Invalid URL")
@@ -256,7 +256,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
             // Configure Request
             var request = URLRequest(url: url)
             request.httpMethod = "DELETE"
-            //        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
             
             // Issue Request
             let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
@@ -286,5 +286,5 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         // unwind
         performSegue(withIdentifier: "unwindToLogin", sender: self)
     }
-
+    
 }
