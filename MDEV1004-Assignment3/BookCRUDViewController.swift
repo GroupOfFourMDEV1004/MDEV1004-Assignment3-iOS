@@ -93,7 +93,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         print(authToken, "authToken")
         //
         // Configure the Request
-        guard let url = URL(string: "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books") else
+        guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books") else
         {
             completion(nil, nil) // Handle URL error
             return
@@ -247,7 +247,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             
-            guard let url = URL(string: "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books/\(id)") else {
+            guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books/\(id)") else {
                 print("Invalid URL")
                 return
             }

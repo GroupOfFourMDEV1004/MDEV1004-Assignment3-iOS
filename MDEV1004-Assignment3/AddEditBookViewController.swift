@@ -65,11 +65,11 @@ class AddEditBookViewController: UIViewController
         
         if let book = book, let id = book._id {
             requestType = "PUT"
-            urlString = "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books/\(id)"
+            urlString = "https://assigment3-mdev1004-api.onrender.com/api/books/\(id)"
             isEdit = true
         } else {
             requestType = "POST"
-            urlString = "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books"
+            urlString = "https://assigment3-mdev1004-api.onrender.com/api/books"
              isEdit = false
         }
         

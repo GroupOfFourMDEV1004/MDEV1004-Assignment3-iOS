@@ -34,7 +34,7 @@ class APILoginViewController: UIViewController
         }
         
         // Configuring the connection
-        let urlString = "https://assigment3-mdev1004-api-pr-3.onrender.com/api/users/login"
+        let urlString = "https://assigment3-mdev1004-api.onrender.com/api/users/login"
         guard let url = URL(string: urlString) else
         {
             print("Invalid URL.")
