@@ -65,12 +65,12 @@ class AddEditBookViewController: UIViewController
         
         if let book = book, let id = book._id {
             requestType = "PUT"
-            urlString = "https://assigment3-mdev1004-api.onrender.com/api/books/\(id)"
+            urlString = "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books/\(id)"
             isEdit = true
         } else {
             requestType = "POST"
-            urlString = "https://assigment3-mdev1004-api.onrender.com/api/books"
-            var isEdit = false
+            urlString = "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books"
+             isEdit = false
         }
         
         guard let url = URL(string: urlString) else {
@@ -111,7 +111,7 @@ class AddEditBookViewController: UIViewController
         request.httpMethod = requestType
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         // New for ICE 10: Add the AuthToken to the request headers
-        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("\(authToken)", forHTTPHeaderField: "Authorization")
         
         // Request
         do {

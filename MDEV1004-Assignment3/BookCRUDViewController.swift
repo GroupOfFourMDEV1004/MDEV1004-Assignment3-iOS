@@ -84,13 +84,16 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         // New for ICE10: Retrieve AuthToken from UserDefaults
         guard let authToken = UserDefaults.standard.string(forKey: "AuthToken") else
         {
+           
             print("AuthToken not available.")
             completion(nil, nil)
             return
         }
+        
+        print(authToken, "authToken")
         //
         // Configure the Request
-        guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books") else
+        guard let url = URL(string: "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books") else
         {
             completion(nil, nil) // Handle URL error
             return
@@ -99,7 +102,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
         // New for ICE 10
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("\(authToken)", forHTTPHeaderField: "Authorization")
         
         // Issue Request
         URLSession.shared.dataTask(with: request) { data, _, error in
@@ -109,16 +112,12 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             
-            guard let data = data else {
-                print("Empty Response")
-                completion(nil, nil) // Handle empty response
-                return
-            }
-            
             // Response
             do {
-                let books = try JSONDecoder().decode([Book].self, from: data)
-                //                print(books.debugDescription, "Books")
+                let json = try JSONSerialization.jsonObject(with: data!, options: []) as? Any
+//                print((json as AnyObject).description!, "bookdebug")
+                let books = try JSONDecoder().decode([Book].self, from: data!)
+                                print(books.debugDescription, "Books")
                 completion(books, nil) // Success
             } catch {
                 completion(nil, error) // Handle JSON decoding error
@@ -248,7 +247,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             
-            guard let url = URL(string: "https://assigment3-mdev1004-api.onrender.com/api/books/\(id)") else {
+            guard let url = URL(string: "https://assigment3-mdev1004-api-pr-3.onrender.com/api/books/\(id)") else {
                 print("Invalid URL")
                 return
             }
@@ -256,7 +255,7 @@ class BookCRUDViewController: UIViewController, UITableViewDelegate, UITableView
             // Configure Request
             var request = URLRequest(url: url)
             request.httpMethod = "DELETE"
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+            request.setValue("\(authToken)", forHTTPHeaderField: "Authorization")
             
             // Issue Request
             let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in

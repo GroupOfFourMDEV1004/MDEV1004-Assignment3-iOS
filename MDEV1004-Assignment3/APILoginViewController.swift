@@ -34,7 +34,7 @@ class APILoginViewController: UIViewController
         }
         
         // Configuring the connection
-        let urlString = "https://assigment3-mdev1004-api.onrender.com/api/users/login"
+        let urlString = "https://assigment3-mdev1004-api-pr-3.onrender.com/api/users/login"
         guard let url = URL(string: urlString) else
         {
             print("Invalid URL.")
@@ -72,8 +72,6 @@ class APILoginViewController: UIViewController
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                 
-                if let message = json?["message"] as? String, message == "Logged in successfully"
-                {
                     if let token = json?["token"] as? String
                     {
                         // Save the token in UserDefaults or other local storage
@@ -88,10 +86,7 @@ class APILoginViewController: UIViewController
                     } else {
                         print("Token not found in the response.")
                     }
-                } else {
-                    let errorMessage = json?["message"] as? String ?? "Unknown error"
-                    print("Login failed: \(errorMessage)")
-                }
+                
             } catch {
                 print("Error decoding JSON response: \(error)")
             }
